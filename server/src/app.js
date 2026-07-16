@@ -6,10 +6,12 @@ const morgan = require("morgan");
 
 const config = require("./config");
 
-const healthRoutes = require("./routes/healthRoutes");
+const routes = require("./routes");
+
 const loggerMiddleware = require("./middleware/loggerMiddleware");
-const ApiResponse = require("./utils/apiResponse");
 const errorMiddleware = require("./middleware/errorMiddleware");
+
+const ApiResponse = require("./utils/apiResponse");
 
 const app = express();
 
@@ -35,11 +37,18 @@ app.use(loggerMiddleware);
 
 /**
  * ===========================================
- * Routes
+ * API Routes
  * ===========================================
  */
 
-app.use("/api/v1/health", healthRoutes);
+// Main API Routes
+app.use("/api/v1", routes);
+
+/**
+ * ===========================================
+ * Root Route
+ * ===========================================
+ */
 
 app.get("/", (req, res) => {
   return res.status(200).json(
@@ -47,6 +56,7 @@ app.get("/", (req, res) => {
       "Welcome to Campus Complaint Management System API",
       {
         documentation: "/api/v1/health",
+        apiBase: "/api/v1",
         version: config.API_VERSION,
       },
       200
