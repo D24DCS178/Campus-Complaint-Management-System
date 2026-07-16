@@ -1,0 +1,29 @@
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const app = require("./app");
+const connectDB = require("./config/db");
+
+const PORT = process.env.PORT || 5000;
+
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(`
+==========================================
+🚀 Server Started Successfully
+==========================================
+Environment : ${process.env.NODE_ENV}
+Port        : ${PORT}
+==========================================
+`);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+startServer();
