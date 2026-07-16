@@ -2,10 +2,11 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const config = require("./config/index");
 const app = require("./app");
 const connectDB = require("./config/db");
 
-const PORT = process.env.PORT || 5000;
+const PORT = config.PORT || 5000;
 
 const startServer = async () => {
   try {
@@ -16,7 +17,7 @@ const startServer = async () => {
 ==========================================
 🚀 Server Started Successfully
 ==========================================
-Environment : ${process.env.NODE_ENV}
+Environment : ${config.NODE_ENV}
 Port        : ${PORT}
 ==========================================
 `);

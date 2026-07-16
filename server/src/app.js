@@ -4,12 +4,19 @@ const helmet = require("helmet");
 const compression = require("compression");
 const morgan = require("morgan");
 
-const app = express();
+const config = require("./config");
+
 const healthRoutes = require("./routes/healthRoutes");
+const loggerMiddleware = require("./middleware/loggerMiddleware");
+const ApiResponse = require("./utils/apiResponse");
+const errorMiddleware = require("./middleware/errorMiddleware");
+
+const app = express();
+
 /**
- * ==============================
+ * ===========================================
  * Global Middlewares
- * ==============================
+ * ===========================================
  */
 
 app.use(helmet());
@@ -24,27 +31,47 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan("dev"));
 
-app.use("/api/v1/health", healthRoutes);
+app.use(loggerMiddleware);
+
 /**
- * ==============================
- * Default Route
- * ==============================
+ * ===========================================
+ * Routes
+ * ===========================================
  */
 
-app.get("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "Campus Complaint Management System API",
-        version: "1.0.0"
-    });
-});
+app.use("/api/v1/health", healthRoutes);
 
 app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Campus Complaint Management System API",
-    documentation: "/api/v1/health",
-  });
+  return res.status(200).json(
+    ApiResponse.success(
+      "Welcome to Campus Complaint Management System API",
+      {
+        documentation: "/api/v1/health",
+        version: config.API_VERSION,
+      },
+      200
+    )
+  );
 });
+
+/**
+ * ===========================================
+ * 404 Route Handler
+ * ===========================================
+ */
+
+app.use((req, res) => {
+  return res.status(404).json(
+    ApiResponse.error("Route not found", 404)
+  );
+});
+
+/**
+ * ===========================================
+ * Global Error Handler
+ * ===========================================
+ */
+
+app.use(errorMiddleware);
 
 module.exports = app;
