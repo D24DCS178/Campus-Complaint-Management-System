@@ -10,7 +10,7 @@ const routes = require("./routes");
 
 const loggerMiddleware = require("./middleware/loggerMiddleware");
 const errorMiddleware = require("./middleware/errorMiddleware");
-
+const userRoutes = require("./routes/userRoutes");
 const ApiResponse = require("./utils/apiResponse");
 
 const app = express();
@@ -34,6 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 app.use(loggerMiddleware);
+
+app.use("/api/v1/users", userRoutes);
 
 /**
  * ===========================================

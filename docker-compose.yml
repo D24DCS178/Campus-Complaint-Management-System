@@ -1,3 +1,47 @@
 version: "3.9"
 
 services:
+  mongo:
+    image: mongo:7
+    container_name: campus-mongo
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongo-data:/data/db
+
+    restart: unless-stopped
+
+  server:
+    build: ./server
+
+    container_name: campus-server
+
+    ports:
+      - "5000:5000"
+
+    env_file:
+      - ./server/.env
+
+    depends_on:
+      - mongo
+
+    restart: unless-stopped
+
+  client:
+    build: ./client
+
+    container_name: campus-client
+
+    ports:
+      - "5173:5173"
+
+    depends_on:
+      - server
+
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo-data:
