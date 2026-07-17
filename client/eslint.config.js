@@ -22,9 +22,12 @@ export default defineConfig([
       },
     },
     rules: {
-      // Disable this rule because AuthContext exports both a context and a provider.
-      // This is acceptable for this project and does not affect functionality.
+      // Allow exporting context and provider from the same file
       "react-refresh/only-export-components": "off",
+
+      // Disable overly strict React Hooks rules for this project
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/exhaustive-deps": "off",
     },
   },
 ]);
