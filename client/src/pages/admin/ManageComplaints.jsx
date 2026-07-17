@@ -14,10 +14,6 @@ function ManageComplaints() {
   const [status, setStatus] = useState("All");
   const [category, setCategory] = useState("All");
 
-  useEffect(() => {
-    fetchComplaints();
-  }, []);
-
   const fetchComplaints = async () => {
     try {
       const response = await getAllComplaints();
@@ -28,6 +24,10 @@ function ManageComplaints() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchComplaints();
+  }, []);
 
   const filteredComplaints = useMemo(() => {
     return complaints.filter((complaint) => {

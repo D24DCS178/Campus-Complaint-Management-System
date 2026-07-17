@@ -9,10 +9,6 @@ function ComplaintDetails() {
     const [complaint, setComplaint] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchComplaint();
-    }, []);
-
     const fetchComplaint = async () => {
         try {
             const response = await getComplaintById(complaintId);
@@ -23,6 +19,10 @@ function ComplaintDetails() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchComplaint();
+    }, []);
 
     if (loading) {
         return (

@@ -19,10 +19,6 @@ function AdminComplaintDetails() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    fetchComplaint();
-  }, []);
-
   const fetchComplaint = async () => {
     try {
       const response = await getComplaintDetails(complaintId);
@@ -38,6 +34,10 @@ function AdminComplaintDetails() {
       setLoading(false);
     }
   };
+  
+  useEffect(() => {
+    fetchComplaint();
+  }, []);
 
   const handleUpdate = async () => {
     try {

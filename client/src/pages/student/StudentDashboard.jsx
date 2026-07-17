@@ -14,10 +14,6 @@ function StudentDashboard() {
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchComplaints();
-    }, []);
-
     const fetchComplaints = async () => {
         try {
             const response = await getMyComplaints();
@@ -28,6 +24,10 @@ function StudentDashboard() {
             setLoading(false);
         }
     };
+    
+    useEffect(() => {
+        fetchComplaints();
+    }, []);
 
     const inProgressComplaints = complaints.filter(
         (complaint) => complaint.status === "In Progress"

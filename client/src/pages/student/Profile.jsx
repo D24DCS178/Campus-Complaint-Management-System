@@ -16,10 +16,6 @@ function Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
   const fetchProfile = async () => {
     try {
       const response = await getProfile();
@@ -30,6 +26,10 @@ function Profile() {
       setLoading(false);
     }
   };
+  
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   if (loading) {
     return (

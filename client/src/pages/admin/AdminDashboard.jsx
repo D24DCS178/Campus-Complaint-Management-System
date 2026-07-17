@@ -16,10 +16,6 @@ function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
-
   const fetchDashboard = async () => {
     try {
       const response = await getDashboardStats();
@@ -31,6 +27,10 @@ function AdminDashboard() {
     }
   };
 
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
+  
   if (loading) {
     return (
       <DashboardLayout>

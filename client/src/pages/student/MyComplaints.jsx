@@ -15,10 +15,6 @@ function MyComplaints() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [priorityFilter, setPriorityFilter] = useState("All");
 
-  useEffect(() => {
-    fetchComplaints();
-  }, []);
-
   const fetchComplaints = async () => {
     try {
       const response = await getMyComplaints();
@@ -29,6 +25,10 @@ function MyComplaints() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchComplaints();
+  }, []);
 
   const filteredComplaints = useMemo(() => {
     return complaints.filter((complaint) => {
