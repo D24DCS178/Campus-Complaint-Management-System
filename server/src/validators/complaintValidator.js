@@ -21,9 +21,8 @@ const validateCreateComplaint = (data) => {
         errors.push("Please select a valid complaint category.");
     }
 
-    if (!data.department || data.department.trim() === "") {
-        errors.push("Department is required.");
-    }
+    // Department is assigned automatically in complaintService.js,
+    // so it should NOT be validated here.
 
     if (
         data.priority &&
